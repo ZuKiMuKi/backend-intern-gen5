@@ -90,10 +90,32 @@ const deleteStudentService = async (id) => {
         return false
     }
 }
+
+const query = async (name) => {
+    try{
+        var collection = await firestore.collection("Students").where("name", "==", name).get()
+        var result = []
+        collection.forEach(doc => {
+            let data = {
+                id: doc.id,
+                name: doc.data().name,
+                classRoom: doc.data().classRoom
+            }
+            result.push(data)
+        })
+        return result
+    }
+    catch (err){
+        console.log(err)
+        return {}
+    }
+}
+
 module.exports = {
     addStudentService,
     getAllStudentService,
     getStudentService,
     updateStudentService,
-    deleteStudentService
+    deleteStudentService,
+    query
 }

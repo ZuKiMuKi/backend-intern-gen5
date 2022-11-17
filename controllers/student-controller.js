@@ -79,10 +79,23 @@ const deleteStudent = async (req, res) => {
         return res.status(500).send("controller err")
     }
 }
+const query = async (req, res) => {
+    try{
+        var name = req.params.name
+        var result = await studentService.query(name)
+        return res.send(result)
+    }
+    catch(err){
+        console.log(err)
+        return res.send("no")
+    }
+}
+
 module.exports = {
     addStudent,
     getAllStudent,
     getStudent,
     updateStudent,
-    deleteStudent
+    deleteStudent,
+    query
 }
